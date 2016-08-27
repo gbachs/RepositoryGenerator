@@ -1,6 +1,10 @@
-﻿using RepositoryGenerator.Core.Generators;
+﻿using Microsoft.Practices.Unity;
+using RepositoryGenerator.Core;
+using RepositoryGenerator.Core.Generators;
+using RepositoryGenerator.Core.Generators.Interfaces;
 using RepositoryGenerator.Core.Mappers;
 using RepositoryGenerator.Core.Repositories;
+using RepositoryGenerator.Core.Repositories.Interfaces;
 
 namespace RepositoryGenerator.Form
 {
@@ -18,14 +22,15 @@ namespace RepositoryGenerator.Form
 
         private void btnGenerate_Click(object sender, System.EventArgs e)
         {
-            var tableDefinitionRepository = new TableDefinitionRepository(new SqlDataTypeMapper());
+            var container = CoreDependencyBuilder.Create();
 
-            var tableDefinition = tableDefinitionRepository.Load(txtTableName.Text.Trim());
+            var tableDefinition = container.Resolve<ITableDefinitionRepository>().Load(txtTableName.Text.Trim());
 
-
-            var sqlCommandGenerator = new SqlCommandGenerator();
+            var sqlCommandGenerator = container.Resolve<ISqlCommandGenerator>();
 
             var insertCommand = sqlCommandGenerator.CreateForInsert(tableDefinition);
+
+            var selectCommand = sqlCommandGenerator.CreateForSelect(tableDefinition);
 
             txtResult.Text = insertCommand;
         }

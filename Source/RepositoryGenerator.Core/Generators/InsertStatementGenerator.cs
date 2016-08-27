@@ -1,14 +1,10 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Text;
+using RepositoryGenerator.Core.Generators.Interfaces;
 using RepositoryGenerator.Core.Models;
 
 namespace RepositoryGenerator.Core.Generators
 {
-    public interface IInsertStatementGenerator
-    {
-        string Create(TableDefinition tableDefinition);
-    }
-
     public class InsertStatementGenerator : IInsertStatementGenerator
     {
         public string Create(TableDefinition tableDefinition)

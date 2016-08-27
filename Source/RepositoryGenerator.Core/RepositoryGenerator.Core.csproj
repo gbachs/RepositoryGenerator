@@ -57,18 +57,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Generators\ISelectStatementGenerator.cs" />
-    <Compile Include="Generators\ISqlCommandGenerator.cs" />
+    <Compile Include="CoreDependencyBuilder.cs" />
+    <Compile Include="Extensions\Database\DbAsEnumerableExtensions.cs" />
+    <Compile Include="Extensions\Database\DbCommandExtensions.cs" />
+    <Compile Include="Extensions\Database\DbConnectionExtensions.cs" />
+    <Compile Include="Extensions\Database\SqlDatabase.cs" />
+    <Compile Include="Extensions\IEnumerableExtensions.cs" />
+    <Compile Include="Generators\Interfaces\IInsertStatementGenerator.cs" />
+    <Compile Include="Generators\Interfaces\ISelectStatementGenerator.cs" />
+    <Compile Include="Generators\Interfaces\ISqlCommandGenerator.cs" />
+    <Compile Include="Generators\SelectStatementGenerator.cs" />
+    <Compile Include="Generators\SqlCommandGenerator.cs" />
+    <Compile Include="Mappers\DataTypeToFunctionReaderMapper.cs" />
     <Compile Include="Models\TableDefinition.cs" />
     <Compile Include="Models\Column.cs" />
     <Compile Include="Models\DataType.cs" />
     <Compile Include="Mappers\DataTypeMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\TableRepository.cs" />
+    <Compile Include="Repositories\TableDefinitionRepository.cs" />
+    <Compile Include="Repositories\Interfaces\ITableDefinitionRepository.cs" />
     <Compile Include="Generators\InsertStatementGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Extensions\" />
     <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
