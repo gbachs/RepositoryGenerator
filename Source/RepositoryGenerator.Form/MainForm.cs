@@ -1,10 +1,8 @@
 ﻿using Microsoft.Practices.Unity;
 using RepositoryGenerator.Core;
-using RepositoryGenerator.Core.Generators;
 using RepositoryGenerator.Core.Generators.Interfaces;
-using RepositoryGenerator.Core.Mappers;
-using RepositoryGenerator.Core.Repositories;
 using RepositoryGenerator.Core.Repositories.Interfaces;
+using RepositoryGenerator.Core.Services;
 
 namespace RepositoryGenerator.Form
 {
@@ -17,7 +15,10 @@ namespace RepositoryGenerator.Form
 
         private void MainForm_Load(object sender, System.EventArgs e)
         {
+            var container = CoreDependencyBuilder.Create();
+            var d = container.Resolve<ICreateDatabaseClassesService>();
 
+           d.Create();
         }
 
         private void btnGenerate_Click(object sender, System.EventArgs e)

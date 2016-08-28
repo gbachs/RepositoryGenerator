@@ -49,6 +49,8 @@ namespace RepositoryGenerator.Core.Mappers
                     return "GetNullableString";
                 case DbType.StringFixedLength:
                     return "GetNullableString";
+                case DbType.Binary:
+                    return "GetBinary";
                 default:
                     throw new NotSupportedException("Unsupported datatype for select: " + dataType.Name);
             }

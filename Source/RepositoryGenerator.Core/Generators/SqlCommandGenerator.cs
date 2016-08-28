@@ -23,15 +23,17 @@ namespace RepositoryGenerator.Core.Generators
             var insertStatement = _insertStatementGenerator.Create(tableDefinition);
 
             var stringBuilder = new StringBuilder();
+
             stringBuilder.AppendLine($"const string sql = @\"{insertStatement}\";");
             stringBuilder.AppendLine("_db.ExecuteNonQuery(sql, cmd=>");
             stringBuilder.AppendLine("{");
 
             foreach (var column in tableDefinition.Columns)
             {
-                stringBuilder.AppendLine($"cmd.AddInParam(\"{column.Name}\", DbType.{column.DataType.DbType}, dto.{column.Name});");
+                stringBuilder.AppendLine($"cmd.AddInParam(\"{column.Name}\", DbType.{column.DataType.DbType}, {tableDefinition.Name.ToLower()}.{column.Name});");
             }
-            stringBuilder.AppendLine("});");
+
+            stringBuilder.AppendLine("})");
 
             return stringBuilder.ToString();
         }
@@ -43,17 +45,25 @@ namespace RepositoryGenerator.Core.Generators
             var stringBuilder = new StringBuilder();
 
             stringBuilder.AppendLine($"const string sql = @\"{selectStatement}\";");
-            stringBuilder.AppendLine("_db.ExecuteNonQuery(sql, cmd=>");
+            stringBuilder.AppendLine("return _db.ExecuteNonQuery(sql, cmd=>");
             stringBuilder.AppendLine("{");
+
+            foreach (var primaryKey in tableDefinition.PrimaryKeys)
+            {
+                stringBuilder.AppendLine($"cmd.AddInParam(\"{primaryKey.Name}\", DbType.{primaryKey.DataType.DbType}, {primaryKey.Name.ToLower()});");
+            }
 
             stringBuilder.AppendLine($"}}, row=>{{ return new {tableDefinition.Name} {{");
 
+            var i = 0;
+            
             foreach (var column in tableDefinition.Columns)
             {
-                stringBuilder.AppendLine($"{column.Name} = row.{_dataTypeToFunctionReaderMapper.Get(column.DataType)}");
+                stringBuilder.AppendLine($"{column.Name} = row.{_dataTypeToFunctionReaderMapper.Get(column.DataType)}({i}),");
+                i++;
             }
 
-            stringBuilder.AppendLine("}}).SingleOrDefault();");
+            stringBuilder.AppendLine("};}).SingleOrDefault();");
 
             return stringBuilder.ToString();
         }

@@ -63,9 +63,12 @@
     <Compile Include="Extensions\Database\DbConnectionExtensions.cs" />
     <Compile Include="Extensions\Database\SqlDatabase.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Generators\Interfaces\IInsertStatementGenerator.cs" />
     <Compile Include="Generators\Interfaces\ISelectStatementGenerator.cs" />
     <Compile Include="Generators\Interfaces\ISqlCommandGenerator.cs" />
+    <Compile Include="Generators\ModelClassGenerator.cs" />
+    <Compile Include="Generators\RepositoryClassGenerator.cs" />
     <Compile Include="Generators\SelectStatementGenerator.cs" />
     <Compile Include="Generators\SqlCommandGenerator.cs" />
     <Compile Include="Mappers\DataTypeToFunctionReaderMapper.cs" />
@@ -74,13 +77,13 @@
     <Compile Include="Models\DataType.cs" />
     <Compile Include="Mappers\DataTypeMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\DatabaesRepositories.cs" />
     <Compile Include="Repositories\TableDefinitionRepository.cs" />
     <Compile Include="Repositories\Interfaces\ITableDefinitionRepository.cs" />
     <Compile Include="Generators\InsertStatementGenerator.cs" />
+    <Compile Include="Services\CreateDatabaseClassesService.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

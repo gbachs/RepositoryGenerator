@@ -4,6 +4,7 @@ using RepositoryGenerator.Core.Generators.Interfaces;
 using RepositoryGenerator.Core.Mappers;
 using RepositoryGenerator.Core.Repositories;
 using RepositoryGenerator.Core.Repositories.Interfaces;
+using RepositoryGenerator.Core.Services;
 
 namespace RepositoryGenerator.Core
 {
@@ -20,6 +21,10 @@ namespace RepositoryGenerator.Core
             container.RegisterType<ITableDefinitionRepository, TableDefinitionRepository>();
             container.RegisterType<ISqlDataTypeMapper, SqlDataTypeMapper>();
             container.RegisterType<IDataTypeToFunctionReaderMapper, DataTypeToFunctionReaderMapper>();
+            container.RegisterType<IRepositoryClassGenerator, RepositoryClassGenerator>();
+            container.RegisterType<IDatabaseRepository, DatabaseRepository>();
+            container.RegisterType<IModelClassGenerator, ModelClassGenerator>();
+            container.RegisterType<ICreateDatabaseClassesService, CreateDatabaseClassesService>();
 
             return container;
         }

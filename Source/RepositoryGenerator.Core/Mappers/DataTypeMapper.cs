@@ -69,10 +69,18 @@ namespace RepositoryGenerator.Core.Mappers
                     if (isNullable)
                         return new DataType(sqlDataTypeName, typeof(Int16?), SqlDbType.TinyInt, DbType.Int16, true);
                     return new DataType(sqlDataTypeName, typeof(Int16), SqlDbType.TinyInt, DbType.Int16, false);
-                case "uniqueIdentifier":
+                case "uniqueidentifier":
                     if (isNullable)
                         return new DataType(sqlDataTypeName, typeof(Guid?), SqlDbType.UniqueIdentifier, DbType.Guid, true);
                     return new DataType(sqlDataTypeName, typeof(Guid), SqlDbType.UniqueIdentifier, DbType.Guid, false);
+                case "varbinary":
+                    if (isNullable)
+                        return new DataType(sqlDataTypeName, typeof(byte?[]), SqlDbType.VarBinary, DbType.Binary, true);
+                    return new DataType(sqlDataTypeName, typeof(byte[]), SqlDbType.VarBinary, DbType.Binary, false);
+                case "numeric":
+                    if (isNullable)
+                        return new DataType(sqlDataTypeName, typeof(decimal?), SqlDbType.Decimal, DbType.Decimal, true);
+                    return new DataType(sqlDataTypeName, typeof(decimal), SqlDbType.Decimal, DbType.Decimal, false);
                 default:
                     throw new ApplicationException("Unsupported datatype: " + sqlDataTypeName);
             }
