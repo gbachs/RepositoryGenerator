@@ -4,18 +4,14 @@ using System.CodeDom.Compiler;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using RepositoryGenerator.Core.Generators.Interfaces;
 using RepositoryGenerator.Core.Models;
 
 namespace RepositoryGenerator.Core.Generators
 {
-    public interface IModelClassGenerator
-    {
-        string Generate(TableDefinition tableDefinition);
-    }
-
     public class ModelClassGenerator: IModelClassGenerator
     {
-        public string Generate(TableDefinition tableDefinition)
+        public string Create(TableDefinition tableDefinition)
         {
             var targetUnit = new CodeCompileUnit();
 
@@ -25,7 +21,7 @@ namespace RepositoryGenerator.Core.Generators
             var targetClass = new CodeTypeDeclaration(tableDefinition.Name)
             {
                 IsClass = true,
-                TypeAttributes = TypeAttributes.Public 
+                TypeAttributes = TypeAttributes.Public
             };
 
             classNamespace.Types.Add(targetClass);

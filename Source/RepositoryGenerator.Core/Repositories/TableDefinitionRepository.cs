@@ -4,7 +4,7 @@ using System.Data;
 using System.Linq;
 using RepositoryGenerator.Core.Extensions;
 using RepositoryGenerator.Core.Extensions.Database;
-using RepositoryGenerator.Core.Mappers;
+using RepositoryGenerator.Core.Mappers.Interfaces;
 using RepositoryGenerator.Core.Models;
 using RepositoryGenerator.Core.Repositories.Interfaces;
 
@@ -40,7 +40,6 @@ namespace RepositoryGenerator.Core.Repositories
             {
                 var columnName = row.GetString(0);
                 var isNullable = row.GetString(1) == "YES";
-
                 return new Column
                 {
                     Name = columnName,

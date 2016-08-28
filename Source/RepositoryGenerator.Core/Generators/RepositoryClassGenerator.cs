@@ -8,11 +8,6 @@ using RepositoryGenerator.Core.Models;
 
 namespace RepositoryGenerator.Core.Generators
 {
-    public interface IRepositoryClassGenerator
-    {
-        string Generate(TableDefinition tableDefinition);
-    }
-
     public class RepositoryClassGenerator : IRepositoryClassGenerator
     {
         private readonly ISqlCommandGenerator _sqlCommandGenerator;
@@ -22,7 +17,7 @@ namespace RepositoryGenerator.Core.Generators
             _sqlCommandGenerator = sqlCommandGenerator;
         }
 
-        public string Generate(TableDefinition tableDefinition)
+        public string Create(TableDefinition tableDefinition)
         {
             var targetUnit = new CodeCompileUnit();
 

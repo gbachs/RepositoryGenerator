@@ -2,9 +2,11 @@
 using RepositoryGenerator.Core.Generators;
 using RepositoryGenerator.Core.Generators.Interfaces;
 using RepositoryGenerator.Core.Mappers;
+using RepositoryGenerator.Core.Mappers.Interfaces;
 using RepositoryGenerator.Core.Repositories;
 using RepositoryGenerator.Core.Repositories.Interfaces;
 using RepositoryGenerator.Core.Services;
+using RepositoryGenerator.Core.Services.Interfaces;
 
 namespace RepositoryGenerator.Core
 {

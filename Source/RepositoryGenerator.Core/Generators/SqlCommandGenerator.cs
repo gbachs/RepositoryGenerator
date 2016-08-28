@@ -1,6 +1,7 @@
 using System.Text;
 using RepositoryGenerator.Core.Generators.Interfaces;
 using RepositoryGenerator.Core.Mappers;
+using RepositoryGenerator.Core.Mappers.Interfaces;
 using RepositoryGenerator.Core.Models;
 
 namespace RepositoryGenerator.Core.Generators

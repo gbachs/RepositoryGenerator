@@ -65,17 +65,21 @@
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Generators\DeleteStatementGenerator.cs" />
+    <Compile Include="Generators\Interfaces\IModelClassGenerator.cs" />
     <Compile Include="Generators\Interfaces\IDeleteStatementGenerator.cs" />
     <Compile Include="Generators\Interfaces\IInsertStatementGenerator.cs" />
     <Compile Include="Generators\Interfaces\ISelectStatementGenerator.cs" />
     <Compile Include="Generators\Interfaces\ISqlCommandGenerator.cs" />
     <Compile Include="Generators\Interfaces\IUpdateStatementGenerator.cs" />
+    <Compile Include="Generators\Interfaces\IRepositoryClassGenerator.cs" />
     <Compile Include="Generators\UpdateStatementGenerator.cs" />
     <Compile Include="Generators\ModelClassGenerator.cs" />
     <Compile Include="Generators\RepositoryClassGenerator.cs" />
     <Compile Include="Generators\SelectStatementGenerator.cs" />
     <Compile Include="Generators\SqlCommandGenerator.cs" />
     <Compile Include="Mappers\DataTypeToFunctionReaderMapper.cs" />
+    <Compile Include="Mappers\Interfaces\IDataTypeToFunctionReaderMapper.cs" />
+    <Compile Include="Mappers\Interfaces\ISqlDataTypeMapper.cs" />
     <Compile Include="Models\TableDefinition.cs" />
     <Compile Include="Models\Column.cs" />
     <Compile Include="Models\DataType.cs" />
@@ -86,6 +90,7 @@
     <Compile Include="Repositories\Interfaces\ITableDefinitionRepository.cs" />
     <Compile Include="Generators\InsertStatementGenerator.cs" />
     <Compile Include="Services\CreateDatabaseClassesService.cs" />
+    <Compile Include="Services\Interfaces\ICreateDatabaseClassesService.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

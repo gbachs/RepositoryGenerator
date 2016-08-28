@@ -1,16 +1,11 @@
 ﻿using System.IO;
-using System.Security.AccessControl;
-using RepositoryGenerator.Core.Generators;
+using RepositoryGenerator.Core.Generators.Interfaces;
 using RepositoryGenerator.Core.Repositories;
 using RepositoryGenerator.Core.Repositories.Interfaces;
+using RepositoryGenerator.Core.Services.Interfaces;
 
 namespace RepositoryGenerator.Core.Services
 {
-    public interface ICreateDatabaseClassesService
-    {
-        void Create();
-    }
-
     public class CreateDatabaseClassesService: ICreateDatabaseClassesService
     {
         private readonly IDatabaseRepository _databaseRepository;
@@ -26,7 +21,7 @@ namespace RepositoryGenerator.Core.Services
             _modelClassGenerator = modelClassGenerator;
         }
 
-        public void Create()
+        public void Create(string outputPath)
         {
             var tables = _databaseRepository.LoadTableNames();
 
@@ -34,11 +29,11 @@ namespace RepositoryGenerator.Core.Services
             {
                 var tableDefinition = _tableDefinitionRepository.Load(table);
 
-                var repositoryClass = _repositoryClassGenerator.Generate(tableDefinition);
-                var modelClass = _modelClassGenerator.Generate(tableDefinition);
+                var repositoryClass = _repositoryClassGenerator.Create(tableDefinition);
+                var modelClass = _modelClassGenerator.Create(tableDefinition);
 
-                File.WriteAllText($"c:\\temp\\{table}Repository.cs", repositoryClass);
-                File.WriteAllText($"c:\\temp\\{table}.cs", modelClass);
+                File.WriteAllText(Path.Combine(outputPath, $"{table}Repository.cs"), repositoryClass);
+                File.WriteAllText(Path.Combine(outputPath, $"{table}.cs"), modelClass);
             }
         }
     }

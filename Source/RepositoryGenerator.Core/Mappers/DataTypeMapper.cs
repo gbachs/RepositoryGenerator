@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Data;
+using RepositoryGenerator.Core.Mappers.Interfaces;
 using RepositoryGenerator.Core.Models;
 
 namespace RepositoryGenerator.Core.Mappers
 {
-    public interface ISqlDataTypeMapper
-    {
-        DataType Map(string sqlDataTypeName, bool isNullable);
-    }
-
     public class SqlDataTypeMapper : ISqlDataTypeMapper
     {
         public DataType Map(string sqlDataTypeName, bool isNullable)
@@ -16,17 +12,17 @@ namespace RepositoryGenerator.Core.Mappers
             switch (sqlDataTypeName.ToLower())
             {
                 case "bigint":
-                    if (isNullable)
-                        return new DataType(sqlDataTypeName, typeof(long?), SqlDbType.BigInt, DbType.Int64, true);
-                    return new DataType(sqlDataTypeName, typeof(long), SqlDbType.BigInt, DbType.Int64, false);
+                    return isNullable
+                        ? new DataType(sqlDataTypeName, typeof(long?), SqlDbType.BigInt, DbType.Int64, true)
+                        : new DataType(sqlDataTypeName, typeof(long), SqlDbType.BigInt, DbType.Int64, false);
                 case "decimal":
-                    if (isNullable)
-                        return new DataType(sqlDataTypeName, typeof(decimal?), SqlDbType.Decimal, DbType.Decimal, true);
-                    return new DataType(sqlDataTypeName, typeof(decimal), SqlDbType.Decimal, DbType.Decimal, false);
+                    return isNullable
+                        ? new DataType(sqlDataTypeName, typeof(decimal?), SqlDbType.Decimal, DbType.Decimal, true)
+                        : new DataType(sqlDataTypeName, typeof(decimal), SqlDbType.Decimal, DbType.Decimal, false);
                 case "bit":
-                    if (isNullable)
-                        return new DataType(sqlDataTypeName, typeof(bool?), SqlDbType.Bit, DbType.Boolean, true);
-                    return new DataType(sqlDataTypeName, typeof(bool), SqlDbType.Bit, DbType.Boolean, false);
+                    return isNullable
+                        ? new DataType(sqlDataTypeName, typeof(bool?), SqlDbType.Bit, DbType.Boolean, true)
+                        : new DataType(sqlDataTypeName, typeof(bool), SqlDbType.Bit, DbType.Boolean, false);
                 case "char":
                     return new DataType(sqlDataTypeName, typeof(string), SqlDbType.Char, DbType.String, true);
                 case "nchar":
@@ -42,45 +38,49 @@ namespace RepositoryGenerator.Core.Mappers
                 case "xml":
                     return new DataType(sqlDataTypeName, typeof(string), SqlDbType.Xml, DbType.Xml, true);
                 case "int":
-                    if (isNullable)
-                        return new DataType(sqlDataTypeName, typeof(int?), SqlDbType.Int, DbType.Int32, true);
-                    return new DataType(sqlDataTypeName, typeof(int), SqlDbType.Int, DbType.Int32, false);
+                    return isNullable
+                        ? new DataType(sqlDataTypeName, typeof(int?), SqlDbType.Int, DbType.Int32, true)
+                        : new DataType(sqlDataTypeName, typeof(int), SqlDbType.Int, DbType.Int32, false);
                 case "float":
                     if (isNullable)
                         return new DataType(sqlDataTypeName, typeof(long?), SqlDbType.Float, DbType.Int64, true);
                     return new DataType(sqlDataTypeName, typeof(long), SqlDbType.Float, DbType.Int64, false);
                 case "date":
-                    if (isNullable)
-                        return new DataType(sqlDataTypeName, typeof(DateTime?), SqlDbType.Date, DbType.Date, true);
-                    return new DataType(sqlDataTypeName, typeof(DateTime), SqlDbType.Date, DbType.Date, false);
+                    return isNullable
+                        ? new DataType(sqlDataTypeName, typeof(DateTime?), SqlDbType.Date, DbType.Date, true)
+                        : new DataType(sqlDataTypeName, typeof(DateTime), SqlDbType.Date, DbType.Date, false);
                 case "datetime":
-                    if (isNullable)
-                        return new DataType(sqlDataTypeName, typeof(DateTime?), SqlDbType.DateTime, DbType.DateTime, true);
-                    return new DataType(sqlDataTypeName, typeof(DateTime), SqlDbType.DateTime, DbType.DateTime, false);
+                    return isNullable
+                        ? new DataType(sqlDataTypeName, typeof(DateTime?), SqlDbType.DateTime, DbType.DateTime, true)
+                        : new DataType(sqlDataTypeName, typeof(DateTime), SqlDbType.DateTime, DbType.DateTime, false);
                 case "time":
-                    if (isNullable)
-                        return new DataType(sqlDataTypeName, typeof(DateTime?), SqlDbType.Time, DbType.Time, true);
-                    return new DataType(sqlDataTypeName, typeof(DateTime), SqlDbType.Time, DbType.Time, false);
+                    return isNullable
+                        ? new DataType(sqlDataTypeName, typeof(DateTime?), SqlDbType.Time, DbType.Time, true)
+                        : new DataType(sqlDataTypeName, typeof(DateTime), SqlDbType.Time, DbType.Time, false);
                 case "smallint":
-                    if (isNullable)
-                        return new DataType(sqlDataTypeName, typeof(Int16?), SqlDbType.SmallInt, DbType.Int16, true);
-                    return new DataType(sqlDataTypeName, typeof(Int16), SqlDbType.SmallInt, DbType.Int16, false);
+                    return isNullable
+                        ? new DataType(sqlDataTypeName, typeof(short?), SqlDbType.SmallInt, DbType.Int16, true)
+                        : new DataType(sqlDataTypeName, typeof(short), SqlDbType.SmallInt, DbType.Int16, false);
                 case "tinyint":
-                    if (isNullable)
-                        return new DataType(sqlDataTypeName, typeof(Int16?), SqlDbType.TinyInt, DbType.Int16, true);
-                    return new DataType(sqlDataTypeName, typeof(Int16), SqlDbType.TinyInt, DbType.Int16, false);
+                    return isNullable
+                        ? new DataType(sqlDataTypeName, typeof(short?), SqlDbType.TinyInt, DbType.Int16, true)
+                        : new DataType(sqlDataTypeName, typeof(short), SqlDbType.TinyInt, DbType.Int16, false);
                 case "uniqueidentifier":
-                    if (isNullable)
-                        return new DataType(sqlDataTypeName, typeof(Guid?), SqlDbType.UniqueIdentifier, DbType.Guid, true);
-                    return new DataType(sqlDataTypeName, typeof(Guid), SqlDbType.UniqueIdentifier, DbType.Guid, false);
+                    return isNullable
+                        ? new DataType(sqlDataTypeName, typeof(Guid?), SqlDbType.UniqueIdentifier, DbType.Guid, true)
+                        : new DataType(sqlDataTypeName, typeof(Guid), SqlDbType.UniqueIdentifier, DbType.Guid, false);
                 case "varbinary":
-                    if (isNullable)
-                        return new DataType(sqlDataTypeName, typeof(byte?[]), SqlDbType.VarBinary, DbType.Binary, true);
-                    return new DataType(sqlDataTypeName, typeof(byte[]), SqlDbType.VarBinary, DbType.Binary, false);
+                    return isNullable
+                        ? new DataType(sqlDataTypeName, typeof(byte?[]), SqlDbType.VarBinary, DbType.Binary, true)
+                        : new DataType(sqlDataTypeName, typeof(byte[]), SqlDbType.VarBinary, DbType.Binary, false);
                 case "numeric":
-                    if (isNullable)
-                        return new DataType(sqlDataTypeName, typeof(decimal?), SqlDbType.Decimal, DbType.Decimal, true);
-                    return new DataType(sqlDataTypeName, typeof(decimal), SqlDbType.Decimal, DbType.Decimal, false);
+                    return isNullable
+                        ? new DataType(sqlDataTypeName, typeof(decimal?), SqlDbType.Decimal, DbType.Decimal, true)
+                        : new DataType(sqlDataTypeName, typeof(decimal), SqlDbType.Decimal, DbType.Decimal, false);
+                case "datetime2":
+                    return isNullable
+                        ? new DataType(sqlDataTypeName, typeof(DateTime?), SqlDbType.DateTime2, DbType.DateTime2, true)
+                        : new DataType(sqlDataTypeName, typeof(DateTime), SqlDbType.DateTime2, DbType.DateTime2, false);
                 default:
                     throw new ApplicationException("Unsupported datatype: " + sqlDataTypeName);
             }

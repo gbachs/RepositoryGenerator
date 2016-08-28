@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Data;
+using RepositoryGenerator.Core.Mappers.Interfaces;
 using RepositoryGenerator.Core.Models;
 
 namespace RepositoryGenerator.Core.Mappers
 {
-    public interface IDataTypeToFunctionReaderMapper
-    {
-        string Get(DataType dataType);
-    }
-
     public class DataTypeToFunctionReaderMapper : IDataTypeToFunctionReaderMapper
     {
         public string Get(DataType dataType)
@@ -51,6 +47,8 @@ namespace RepositoryGenerator.Core.Mappers
                     return "GetNullableString";
                 case DbType.Binary:
                     return "GetBinary";
+                case DbType.DateTime2:
+                    return "GetDateTime";
                 default:
                     throw new NotSupportedException("Unsupported datatype for select: " + dataType.Name);
             }

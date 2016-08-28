@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace RepositoryGenerator.Core.Models
+﻿namespace RepositoryGenerator.Core.Models
 {
     public class Column
     {
