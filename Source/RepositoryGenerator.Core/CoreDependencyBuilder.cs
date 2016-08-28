@@ -25,6 +25,7 @@ namespace RepositoryGenerator.Core
             container.RegisterType<IDatabaseRepository, DatabaseRepository>();
             container.RegisterType<IModelClassGenerator, ModelClassGenerator>();
             container.RegisterType<ICreateDatabaseClassesService, CreateDatabaseClassesService>();
+            container.RegisterType<IUpdateStatementGenerator, UpdateStatementGenerator>();
 
             return container;
         }

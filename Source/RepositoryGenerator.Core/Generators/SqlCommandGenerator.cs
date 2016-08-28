@@ -10,12 +10,14 @@ namespace RepositoryGenerator.Core.Generators
         private readonly IInsertStatementGenerator _insertStatementGenerator;
         private readonly ISelectStatementGenerator _selectStatementGenerator;
         private readonly IDataTypeToFunctionReaderMapper _dataTypeToFunctionReaderMapper;
+        private readonly IUpdateStatementGenerator _updateStatementGenerator;
 
-        public SqlCommandGenerator(IDataTypeToFunctionReaderMapper dataTypeToFunctionReaderMapper, ISelectStatementGenerator selectStatementGenerator, IInsertStatementGenerator insertStatementGenerator)
+        public SqlCommandGenerator(IDataTypeToFunctionReaderMapper dataTypeToFunctionReaderMapper, ISelectStatementGenerator selectStatementGenerator, IInsertStatementGenerator insertStatementGenerator, IUpdateStatementGenerator updateStatementGenerator)
         {
             _dataTypeToFunctionReaderMapper = dataTypeToFunctionReaderMapper;
             _selectStatementGenerator = selectStatementGenerator;
             _insertStatementGenerator = insertStatementGenerator;
+            _updateStatementGenerator = updateStatementGenerator;
         }
 
         public string CreateForInsert(TableDefinition tableDefinition)
@@ -56,7 +58,7 @@ namespace RepositoryGenerator.Core.Generators
             stringBuilder.AppendLine($"}}, row=>{{ return new {tableDefinition.Name} {{");
 
             var i = 0;
-            
+
             foreach (var column in tableDefinition.Columns)
             {
                 stringBuilder.AppendLine($"{column.Name} = row.{_dataTypeToFunctionReaderMapper.Get(column.DataType)}({i}),");
@@ -64,6 +66,26 @@ namespace RepositoryGenerator.Core.Generators
             }
 
             stringBuilder.AppendLine("};}).SingleOrDefault();");
+
+            return stringBuilder.ToString();
+        }
+
+        public string CreateForUpdate(TableDefinition tableDefinition)
+        {
+            var updateStatement = _updateStatementGenerator.Create(tableDefinition);
+
+            var stringBuilder = new StringBuilder();
+
+            stringBuilder.AppendLine($"const string sql = @\"{updateStatement}\";");
+            stringBuilder.AppendLine("_db.ExecuteNonQuery(sql, cmd=>");
+            stringBuilder.AppendLine("{");
+
+            foreach (var column in tableDefinition.Columns)
+            {
+                stringBuilder.AppendLine($"cmd.AddInParam(\"{column.Name}\", DbType.{column.DataType.DbType}, {tableDefinition.Name.ToLower()}.{column.Name});");
+            }
+
+            stringBuilder.AppendLine("})");
 
             return stringBuilder.ToString();
         }

@@ -41,6 +41,7 @@ namespace RepositoryGenerator.Core.Generators
             AddFields(targetClass);
             AddInsertMethod(tableDefinition, targetClass);
             AddLoadMethod(tableDefinition, targetClass);
+            AddUpdateMethod(tableDefinition, targetClass);
             AddConstructor(targetClass);
 
             var provider = CodeDomProvider.CreateProvider("CSharp");
@@ -102,6 +103,20 @@ namespace RepositoryGenerator.Core.Generators
             loadMethod.Statements.Add(new CodeSnippetExpression(_sqlCommandGenerator.CreateForSelect(tableDefinition)));
 
             targetClass.Members.Add(loadMethod);
+        }
+
+        private void AddUpdateMethod(TableDefinition tableDefinition, CodeTypeDeclaration targetClass)
+        {
+            var updateMethod = new CodeMemberMethod
+            {
+                Attributes = MemberAttributes.Public | MemberAttributes.Final,
+                Name = "Update"
+            };
+
+            updateMethod.Parameters.Add(new CodeParameterDeclarationExpression(tableDefinition.Name, tableDefinition.Name.ToLower()));
+            updateMethod.Statements.Add(new CodeSnippetExpression(_sqlCommandGenerator.CreateForUpdate(tableDefinition)));
+
+            targetClass.Members.Add(updateMethod);
         }
 
         private static void AddFields(CodeTypeDeclaration targetClass)

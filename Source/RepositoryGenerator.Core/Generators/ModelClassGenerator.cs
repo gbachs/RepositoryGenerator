@@ -22,10 +22,10 @@ namespace RepositoryGenerator.Core.Generators
             var classNamespace = new CodeNamespace("Repositories");
             AddImports(classNamespace);
 
-            var targetClass = new CodeTypeDeclaration("{tableDefinition.Name}")
+            var targetClass = new CodeTypeDeclaration(tableDefinition.Name)
             {
                 IsClass = true,
-                TypeAttributes = TypeAttributes.Public | TypeAttributes.Sealed
+                TypeAttributes = TypeAttributes.Public 
             };
 
             classNamespace.Types.Add(targetClass);
@@ -68,8 +68,6 @@ namespace RepositoryGenerator.Core.Generators
         private static void AddImports(CodeNamespace classNamespace)
         {
             classNamespace.Imports.Add(new CodeNamespaceImport("System"));
-            classNamespace.Imports.Add(new CodeNamespaceImport("System.Data"));
-            classNamespace.Imports.Add(new CodeNamespaceImport("System.Linq"));
         }
     }
 }

@@ -67,6 +67,8 @@
     <Compile Include="Generators\Interfaces\IInsertStatementGenerator.cs" />
     <Compile Include="Generators\Interfaces\ISelectStatementGenerator.cs" />
     <Compile Include="Generators\Interfaces\ISqlCommandGenerator.cs" />
+    <Compile Include="Generators\Interfaces\IUpdateStatementGenerator.cs" />
+    <Compile Include="Generators\UpdateStatementGenerator.cs" />
     <Compile Include="Generators\ModelClassGenerator.cs" />
     <Compile Include="Generators\RepositoryClassGenerator.cs" />
     <Compile Include="Generators\SelectStatementGenerator.cs" />
