@@ -64,6 +64,8 @@
     <Compile Include="Extensions\Database\SqlDatabase.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Generators\DeleteStatementGenerator.cs" />
+    <Compile Include="Generators\Interfaces\IDeleteStatementGenerator.cs" />
     <Compile Include="Generators\Interfaces\IInsertStatementGenerator.cs" />
     <Compile Include="Generators\Interfaces\ISelectStatementGenerator.cs" />
     <Compile Include="Generators\Interfaces\ISqlCommandGenerator.cs" />

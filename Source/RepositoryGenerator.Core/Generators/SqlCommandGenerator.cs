@@ -11,13 +11,15 @@ namespace RepositoryGenerator.Core.Generators
         private readonly ISelectStatementGenerator _selectStatementGenerator;
         private readonly IDataTypeToFunctionReaderMapper _dataTypeToFunctionReaderMapper;
         private readonly IUpdateStatementGenerator _updateStatementGenerator;
+        private readonly IDeleteStatementGenerator _deleteStatementGenerator;
 
-        public SqlCommandGenerator(IDataTypeToFunctionReaderMapper dataTypeToFunctionReaderMapper, ISelectStatementGenerator selectStatementGenerator, IInsertStatementGenerator insertStatementGenerator, IUpdateStatementGenerator updateStatementGenerator)
+        public SqlCommandGenerator(IDataTypeToFunctionReaderMapper dataTypeToFunctionReaderMapper, ISelectStatementGenerator selectStatementGenerator, IInsertStatementGenerator insertStatementGenerator, IUpdateStatementGenerator updateStatementGenerator, IDeleteStatementGenerator deleteStatementGenerator)
         {
             _dataTypeToFunctionReaderMapper = dataTypeToFunctionReaderMapper;
             _selectStatementGenerator = selectStatementGenerator;
             _insertStatementGenerator = insertStatementGenerator;
             _updateStatementGenerator = updateStatementGenerator;
+            _deleteStatementGenerator = deleteStatementGenerator;
         }
 
         public string CreateForInsert(TableDefinition tableDefinition)
@@ -81,6 +83,26 @@ namespace RepositoryGenerator.Core.Generators
             stringBuilder.AppendLine("{");
 
             foreach (var column in tableDefinition.Columns)
+            {
+                stringBuilder.AppendLine($"cmd.AddInParam(\"{column.Name}\", DbType.{column.DataType.DbType}, {tableDefinition.Name.ToLower()}.{column.Name});");
+            }
+
+            stringBuilder.AppendLine("})");
+
+            return stringBuilder.ToString();
+        }
+
+        public string CreateForDelete(TableDefinition tableDefinition)
+        {
+            var deleteStatement = _deleteStatementGenerator.Create(tableDefinition);
+
+            var stringBuilder = new StringBuilder();
+
+            stringBuilder.AppendLine($"const string sql = @\"{deleteStatement}\";");
+            stringBuilder.AppendLine("_db.ExecuteNonQuery(sql, cmd=>");
+            stringBuilder.AppendLine("{");
+
+            foreach (var column in tableDefinition.PrimaryKeys)
             {
                 stringBuilder.AppendLine($"cmd.AddInParam(\"{column.Name}\", DbType.{column.DataType.DbType}, {tableDefinition.Name.ToLower()}.{column.Name});");
             }

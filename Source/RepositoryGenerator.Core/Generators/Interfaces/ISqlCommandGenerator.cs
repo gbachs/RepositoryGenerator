@@ -7,5 +7,6 @@ namespace RepositoryGenerator.Core.Generators.Interfaces
         string CreateForInsert(TableDefinition tableDefinition);
         string CreateForSelect(TableDefinition tableDefinition);
         string CreateForUpdate(TableDefinition tableDefinition);
+        string CreateForDelete(TableDefinition tableDefinition);
     }
 }
