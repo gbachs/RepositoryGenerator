@@ -1,4 +1,5 @@
-﻿using Microsoft.Practices.Unity;
+﻿using System.Configuration;
+using Microsoft.Practices.Unity;
 using RepositoryGenerator.Core;
 using RepositoryGenerator.Core.Services.Interfaces;
 
@@ -9,7 +10,7 @@ namespace RepositoryGenerator.Console
         static void Main(string[] args)
         {
             var container = CoreDependencyBuilder.Create();
-            container.Resolve<ICreateDatabaseClassesService>().Create("C:\\temp\\");
+            container.Resolve<ICreateDatabaseClassesService>().Create(ConfigurationManager.AppSettings["OutputPath"]);
         }
     }
 }

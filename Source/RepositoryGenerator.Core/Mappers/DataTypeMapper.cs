@@ -82,7 +82,7 @@ namespace RepositoryGenerator.Core.Mappers
                         ? new DataType(sqlDataTypeName, typeof(DateTime?), SqlDbType.DateTime2, DbType.DateTime2, true)
                         : new DataType(sqlDataTypeName, typeof(DateTime), SqlDbType.DateTime2, DbType.DateTime2, false);
                 default:
-                    throw new ApplicationException("Unsupported datatype: " + sqlDataTypeName);
+                    return new DataType(sqlDataTypeName, typeof(string), SqlDbType.NVarChar, DbType.String, false);
             }
         }
     }

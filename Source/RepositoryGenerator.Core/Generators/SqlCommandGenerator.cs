@@ -50,7 +50,7 @@ namespace RepositoryGenerator.Core.Generators
             var stringBuilder = new StringBuilder();
 
             stringBuilder.AppendLine($"const string sql = @\"{selectStatement}\";");
-            stringBuilder.AppendLine("return _db.ExecuteNonQuery(sql, cmd=>");
+            stringBuilder.AppendLine("return _db.Select(sql, cmd=>");
             stringBuilder.AppendLine("{");
 
             foreach (var primaryKey in tableDefinition.PrimaryKeys)

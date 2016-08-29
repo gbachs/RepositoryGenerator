@@ -11,7 +11,7 @@ namespace RepositoryGenerator.Core.Generators
         {
             var stringBuilder = new StringBuilder();
 
-            stringBuilder.AppendLine($"select {string.Join(", ", tableDefinition.Columns.Select(x => $"[{ x.Name}]"))})");
+            stringBuilder.AppendLine($"select {string.Join(", ", tableDefinition.Columns.Select(x => $"[{ x.Name}]"))}");
             stringBuilder.AppendLine($"from {tableDefinition.Name}");
 
             if (tableDefinition.PrimaryKeys.Any())
