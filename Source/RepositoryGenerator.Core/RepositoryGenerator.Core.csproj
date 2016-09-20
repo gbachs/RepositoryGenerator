@@ -65,6 +65,8 @@
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Generators\DeleteStatementGenerator.cs" />
+    <Compile Include="Generators\ExistsStatementGenerator.cs" />
+    <Compile Include="Generators\Interfaces\IExistsStatementGenerator.cs" />
     <Compile Include="Generators\Interfaces\IModelClassGenerator.cs" />
     <Compile Include="Generators\Interfaces\IDeleteStatementGenerator.cs" />
     <Compile Include="Generators\Interfaces\IInsertStatementGenerator.cs" />

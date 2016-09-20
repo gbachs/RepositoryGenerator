@@ -8,5 +8,6 @@ namespace RepositoryGenerator.Core.Generators.Interfaces
         string CreateForSelect(TableDefinition tableDefinition);
         string CreateForUpdate(TableDefinition tableDefinition);
         string CreateForDelete(TableDefinition tableDefinition);
+        string CreateForExists(TableDefinition tableDefinition);
     }
 }

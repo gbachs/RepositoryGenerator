@@ -1,6 +1,5 @@
 using System.Text;
 using RepositoryGenerator.Core.Generators.Interfaces;
-using RepositoryGenerator.Core.Mappers;
 using RepositoryGenerator.Core.Mappers.Interfaces;
 using RepositoryGenerator.Core.Models;
 
@@ -13,14 +12,16 @@ namespace RepositoryGenerator.Core.Generators
         private readonly IDataTypeToFunctionReaderMapper _dataTypeToFunctionReaderMapper;
         private readonly IUpdateStatementGenerator _updateStatementGenerator;
         private readonly IDeleteStatementGenerator _deleteStatementGenerator;
+        private readonly IExistsStatementGenerator _existsStatementGenerator;
 
-        public SqlCommandGenerator(IDataTypeToFunctionReaderMapper dataTypeToFunctionReaderMapper, ISelectStatementGenerator selectStatementGenerator, IInsertStatementGenerator insertStatementGenerator, IUpdateStatementGenerator updateStatementGenerator, IDeleteStatementGenerator deleteStatementGenerator)
+        public SqlCommandGenerator(IDataTypeToFunctionReaderMapper dataTypeToFunctionReaderMapper, ISelectStatementGenerator selectStatementGenerator, IInsertStatementGenerator insertStatementGenerator, IUpdateStatementGenerator updateStatementGenerator, IDeleteStatementGenerator deleteStatementGenerator, IExistsStatementGenerator existsStatementGenerator)
         {
             _dataTypeToFunctionReaderMapper = dataTypeToFunctionReaderMapper;
             _selectStatementGenerator = selectStatementGenerator;
             _insertStatementGenerator = insertStatementGenerator;
             _updateStatementGenerator = updateStatementGenerator;
             _deleteStatementGenerator = deleteStatementGenerator;
+            _existsStatementGenerator = existsStatementGenerator;
         }
 
         public string CreateForInsert(TableDefinition tableDefinition)
@@ -109,6 +110,26 @@ namespace RepositoryGenerator.Core.Generators
             }
 
             stringBuilder.AppendLine("})");
+
+            return stringBuilder.ToString();
+        }
+
+        public string CreateForExists(TableDefinition tableDefinition)
+        {
+            var existsStatement = _existsStatementGenerator.Create(tableDefinition);
+
+            var stringBuilder = new StringBuilder();
+
+            stringBuilder.AppendLine($"const string sql = @\"{existsStatement}\";");
+            stringBuilder.AppendLine("return _db.ExecuteScaler(sql, cmd=>");
+            stringBuilder.AppendLine("{");
+
+            foreach (var column in tableDefinition.PrimaryKeys)
+            {
+                stringBuilder.AppendLine($"cmd.AddInParam(\"{column.Name}\", DbType.{column.DataType.DbType}, {tableDefinition.Name.ToLower()}.{column.Name});");
+            }
+
+            stringBuilder.AppendLine("}) == 1");
 
             return stringBuilder.ToString();
         }

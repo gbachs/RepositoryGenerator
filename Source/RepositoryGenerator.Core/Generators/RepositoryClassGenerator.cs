@@ -38,6 +38,7 @@ namespace RepositoryGenerator.Core.Generators
             AddLoadMethod(tableDefinition, targetClass);
             AddUpdateMethod(tableDefinition, targetClass);
             AddDeleteMethod(tableDefinition, targetClass);
+            AddExistsMethod(tableDefinition, targetClass);
             AddConstructor(targetClass);
 
             var provider = CodeDomProvider.CreateProvider("CSharp");
@@ -70,16 +71,31 @@ namespace RepositoryGenerator.Core.Generators
 
         private void AddDeleteMethod(TableDefinition tableDefinition, CodeTypeDeclaration targetClass)
         {
-            var insertMethod = new CodeMemberMethod
+            var deleteMethod = new CodeMemberMethod
             {
                 Attributes = MemberAttributes.Public | MemberAttributes.Final,
                 Name = "Delete"
             };
 
-            insertMethod.Parameters.Add(new CodeParameterDeclarationExpression(tableDefinition.Name, tableDefinition.Name.ToLower()));
-            insertMethod.Statements.Add(new CodeSnippetExpression(_sqlCommandGenerator.CreateForDelete(tableDefinition)));
+            deleteMethod.Parameters.Add(new CodeParameterDeclarationExpression(tableDefinition.Name, tableDefinition.Name.ToLower()));
+            deleteMethod.Statements.Add(new CodeSnippetExpression(_sqlCommandGenerator.CreateForDelete(tableDefinition)));
 
-            targetClass.Members.Add(insertMethod);
+            targetClass.Members.Add(deleteMethod);
+        }
+
+        private void AddExistsMethod(TableDefinition tableDefinition, CodeTypeDeclaration targetClass)
+        {
+            var existsMethod = new CodeMemberMethod
+            {
+                Attributes = MemberAttributes.Public | MemberAttributes.Final,
+                Name = "Exists",
+                ReturnType  = new CodeTypeReference(typeof(bool))
+            };
+
+            existsMethod.Parameters.Add(new CodeParameterDeclarationExpression(tableDefinition.Name, tableDefinition.Name.ToLower()));
+            existsMethod.Statements.Add(new CodeSnippetExpression(_sqlCommandGenerator.CreateForExists(tableDefinition)));
+
+            targetClass.Members.Add(existsMethod);
         }
 
         private void AddInsertMethod(TableDefinition tableDefinition, CodeTypeDeclaration targetClass)
