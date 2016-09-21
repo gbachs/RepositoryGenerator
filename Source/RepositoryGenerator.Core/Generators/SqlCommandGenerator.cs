@@ -121,7 +121,7 @@ namespace RepositoryGenerator.Core.Generators
             var stringBuilder = new StringBuilder();
 
             stringBuilder.AppendLine($"const string sql = @\"{existsStatement}\";");
-            stringBuilder.AppendLine("return _db.ExecuteScaler(sql, cmd=>");
+            stringBuilder.AppendLine("return _db.ExecuteScalar<int>(sql, cmd=>");
             stringBuilder.AppendLine("{");
 
             foreach (var column in tableDefinition.PrimaryKeys)
